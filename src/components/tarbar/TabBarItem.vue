@@ -1,0 +1,63 @@
+<template>
+  <div class="tab-bar-item" @click="itemClick">
+    <div v-if="!isActive"><slot name="item-icon"></slot></div>
+    <div v-else><slot name="item-icon-active"></slot></div>
+    <div :style="activeStyle"><slot name="item-text"></slot></div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'TapBarItem',
+  props: {
+    path: String,
+    activeColor: {
+      type: String,
+      default: 'red'
+    }
+  },
+  // eslint-disable-next-line space-before-function-paren
+  data() {
+    return {
+      // isActive: true
+    }
+  },
+  methods: {
+    // eslint-disable-next-line space-before-function-paren
+    itemClick() {
+      this.$router.replace(this.path)
+    }
+  },
+  computed: {
+    // 判断当前活跃组件是否和路径一致
+    // eslint-disable-next-line space-before-function-paren
+    isActive() {
+      return this.$route.path.indexOf(this.path) !== -1
+    },
+    // eslint-disable-next-line space-before-function-paren
+    activeStyle() {
+      return this.isActive ? { color: this.activeColor } : {}
+    }
+  }
+}
+</script>
+
+<style deep>
+.tab-bar-item {
+  /* 导航栏放置为一排 */
+  flex: 1;
+  /* 字体居中 */
+  text-align: center;
+  height: 49px;
+  font-size: 14px;
+}
+/* 调整导航栏图标大小 */
+.tab-bar-item img {
+  width: 24px;
+  height: 24px;
+  margin-top: 3px;
+  /* vertical-align 属性设置元素的垂直对齐方式。 */
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+</style>
